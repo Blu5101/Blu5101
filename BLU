@@ -1,0 +1,52 @@
+import datetime
+
+class Reminder:
+    def __init__(self, title, date_time):
+        self.title = title
+        self.date_time = date_time
+
+def create_reminder():
+    title = input("Enter reminder title: ")  # Use input() for Python 3.x
+    date_str = input("Enter reminder date and time (YYYY-MM-DD HH:MM): ")
+
+    try:
+        date_time = datetime.datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+        reminder = Reminder(title, date_time)
+        return reminder
+    except ValueError:
+        print("Invalid date format! Please use YYYY-MM-DD HH:MM.")
+        return None
+
+def display_reminders(reminders):
+    if not reminders:
+        print("No reminders found.")
+    else:
+        print("Current reminders:")
+        for index, reminder in enumerate(reminders, 1):
+            print(f"{index}. {reminder.title} - {reminder.date_time.strftime('%Y-%m-%d %H:%M')}")
+
+def main():
+    reminders = []
+
+    while True:
+        print("\n1. Create Reminder")
+        print("2. Display Reminders")
+        print("3. Exit")
+
+        choice = input("Enter your choice (1-3): ")  # Use input() for Python 3.x
+
+        if choice == '1':
+            reminder = create_reminder()
+            if reminder:
+                reminders.append(reminder)
+                print("Reminder created successfully.")
+        elif choice == '2':
+            display_reminders(reminders)
+        elif choice == '3':
+            print("Exiting reminder app.")
+            break
+        else:
+            print("Invalid choice! Please select 1, 2, or 3.")
+
+if __name__ == "__main__":
+    main()
